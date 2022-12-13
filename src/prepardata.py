@@ -12,7 +12,7 @@ import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de gra
 
 # Leemos los archivos csv
 def read_file_csv(filename):
-    df = pd.read_csv(os.path.join('/data/raw/', filename)).set_index('coddoc')
+    df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
