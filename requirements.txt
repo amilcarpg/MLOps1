@@ -1,0 +1,10 @@
+# requirements
+pandas
+numpy==1.23.0
+matplotlib==3.6.2
+seaborn
+scipy
+scikit-learn
+
+
+
