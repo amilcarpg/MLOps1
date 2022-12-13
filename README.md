@@ -9,3 +9,5 @@ producto (depósito a plazo del banco) será (o no) suscrito.
 
 Objetivo
 Clasificar los nuevos leads como posibles nuevos clientes
+
+Codigo optimizado para Windows
