@@ -11,10 +11,13 @@ from scipy import stats ## Herramientas y algoritmos matemáticos para python
 import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de graficos y demás.
 
 # Exportamos la matriz de datos con las columnas seleccionadas
-def data_exporting(df, features, filename):
-    #dfp = df[features]
+def data_exporting(df, filename):
     dfp = df
-    dfp.to_csv(os.path.join('../data/score/', filename))
+    
+    path ="E:\DevP\MLOps1\MLOps1\data\score"
+    dfp.to_csv(os.path.join(path, filename))
+    
+    #dfp.to_csv(os.path.join('../data/score/', filename))
     print(filename, 'exportado correctamente en la carpeta processed')
 
 
@@ -120,7 +123,10 @@ def data_preparation(df):
     return df
 
 def read_file_csv(filename):
-    df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
+    path ='E:\DevP\MLOps1\MLOps1\data'
+    df = pd.read_csv(os.path.join(path,"raw" ,filename)).set_index('coddoc')
+    #df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
+   
     print(filename, ' cargado correctamente')
     return df
 
@@ -130,20 +136,28 @@ def read_file_csv(filename):
 def data_exporting(df, features, filename):
     #dfp = df[features]
     dfp = df
-    dfp.to_csv(os.path.join('../data/processed/', filename))
+    path ='E:\DevP\MLOps1\MLOps1\data\score'
+    dfp.to_csv(os.path.join(path, filename))
+    #dfp.to_csv(os.path.join('../data/score/', filename))
     print(filename, 'exportado correctamente en la carpeta processed')
 
 def data_ejecutar(df):
+    print('Iiciando la evaluacion')
     filenameModel = 'finalized_model.sav'
-    AdaBoost = pickle.load(open(os.path.join('../model/', filenameModel), 'rb'))
+    path = "E:\DevP\MLOps1\MLOps1\model"
+    AdaBoost = pickle.load(open(os.path.join( path, filenameModel), 'rb'))
+    #AdaBoost = pickle.load(open(os.path.join('../model/', filenameModel), 'rb'))
     
-    df_scoring = df.drop("coddoc",axis=1)
+    df_scoring = df.drop("Adq_Ahorro",axis=1)
+    #df_scoring = df
 
     from sklearn.ensemble import AdaBoostClassifier # Paso01: Instancio
     # Predecimos sobre el set de datos de implementacion con el modelo entrenado
-    y_scoring = AdaBoost.predict(df_scoring) # Predecimos sobre nuevos clientes o clientes sin la variable dependiente VD
+    y_scoring = AdaBoost.predict(df_scoring) 
+    # Predecimos sobre nuevos clientes o clientes sin la variable dependiente VD
     # Juntamos el ID con la clase
-    data = np.hstack((df['coddoc'].values.reshape(-1,1), y_scoring.reshape(-1,1)))
+    data = np.hstack((df.index.values.reshape(-1,1), y_scoring.reshape(-1,1)))
+    #data = np.hstack((df['coddoc'].values.reshape(-1,1), y_scoring.reshape(-1,1)))
     # Le asignamos nombres a las columnas
     df_submmit = pd.DataFrame(data, columns=['coddoc','Adq_Ahorro'])
     # Convertimos al formato solicitado por Analytics Vidhya

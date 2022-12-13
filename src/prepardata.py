@@ -12,7 +12,9 @@ import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de gra
 
 # Leemos los archivos csv
 def read_file_csv(filename):
-    df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
+    path ='E:\DevP\MLOps1\MLOps1\data'
+    df = pd.read_csv(os.path.join(path,"raw" ,filename)).set_index('coddoc')
+    #df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
@@ -22,7 +24,9 @@ def read_file_csv(filename):
 def data_exporting(df, features, filename):
     #dfp = df[features]
     dfp = df
-    dfp.to_csv(os.path.join('../data/processed/', filename))
+    path ="E:\DevP\MLOps1\MLOps1\data\processed"
+    dfp.to_csv(os.path.join(path, filename))
+    #dfp.to_csv(os.path.join('../data/processed/', filename))
     print(filename, 'exportado correctamente en la carpeta processed')
 
 # Realizamos la transformación de datos

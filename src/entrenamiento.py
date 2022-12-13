@@ -12,25 +12,30 @@ import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de gra
 
 # Leemos los archivos csv
 def read_file_csv(filename):
-    df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
+    path ="E:\DevP\MLOps1\MLOps1\data\processed"
+    df = pd.read_csv(os.path.join(path, filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
 
 
 # Exportamos la matriz de datos con las columnas seleccionadas
-def data_exporting(df, features, filename):
+def data_exporting(df, filename):
     #dfp = df[features]
     dfp = df
-    dfp.to_csv(os.path.join('../data/processed/', filename))
+    path ="E:\DevP\MLOps1\MLOps1\data\processed"
+    dfp.to_csv(os.path.join(path, filename))
+    #dfp.to_csv(os.path.join('..\data\processed', filename))
     print(filename, 'exportado correctamente en la carpeta processed')
 
-def data_trainning(df,filename):
+def data_trainning(df):
     #se elimina el campo de codigo
-    df= df.drop('coddoc',axis=1)
+    #df= df.drop('coddoc',axis=1)
 
     ## Si deseamos balancear, podemos hacerlo con toda la informacion?
 # Creación de la data de train y la data de test
+    print('Creando Xtrain y Xtest')
+    print('---')
     from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(df.drop('Adq_Ahorro', axis=1), # (X,y,%test,estratificacion)
         df['Adq_Ahorro'], 
@@ -38,6 +43,8 @@ def data_trainning(df,filename):
         stratify=df['Adq_Ahorro'],
         random_state=100)
 
+    print('Iniciando entrenamiento ADABOOST')
+    print('---')
 ## ADA
     from sklearn.ensemble import AdaBoostClassifier # Paso01: Instancio
     # Parámetros :
@@ -51,9 +58,15 @@ def data_trainning(df,filename):
     y_pred_train=AdaBoost.predict(X_train) # Prediccion sobre el train
     y_pred_test= AdaBoost.predict(X_test) # Prediccion sobre el test
 
+    print('Guardando Modelo')
+    print('---')
     filenameModel = 'finalized_model.sav'
-    pickle.dump(AdaBoost, open(os.path.join('../model/', filenameModel), 'wb'))
+    path = "E:\DevP\MLOps1\MLOps1\model"
+    #pickle.dump(AdaBoost, open(os.path.join('../model/', filenameModel), 'wb'))
+    pickle.dump(AdaBoost, open(os.path.join(path, filenameModel), 'wb'))
 
+    print('Validando Modelo')
+    print('---')
     from sklearn import metrics as metrics
     # Matriz de confusion
     print("Matriz confusion: Train")
@@ -103,7 +116,6 @@ def main():
     df1 = read_file_csv('AdquisicionAhorro.csv')
     tdf1 = data_trainning(df1)
 
-    data_exporting(tdf1, '','AdquisicionAhorro.csv')
     
     #Crear test y train
     #se elimina el campo de codigo
