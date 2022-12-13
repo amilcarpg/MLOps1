@@ -12,8 +12,9 @@ import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de gra
 
 # Leemos los archivos csv
 def read_file_csv(filename):
-    path ="E:\DevP\MLOps1\MLOps1\data\processed"
-    df = pd.read_csv(os.path.join(path, filename)).set_index('coddoc')
+    #path ="E:\DevP\MLOps1\MLOps1\data\processed"
+    #df = pd.read_csv(os.path.join(path, filename)).set_index('coddoc')
+    df = pd.read_csv(os.path.join('..\data\source', filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
@@ -21,7 +22,6 @@ def read_file_csv(filename):
 
 # Exportamos la matriz de datos con las columnas seleccionadas
 def data_exporting(df, filename):
-    #dfp = df[features]
     dfp = df
     path ="E:\DevP\MLOps1\MLOps1\data\processed"
     dfp.to_csv(os.path.join(path, filename))

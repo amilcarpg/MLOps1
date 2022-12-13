@@ -21,7 +21,7 @@ def read_file_csv(filename):
 
 
 # Exportamos la matriz de datos con las columnas seleccionadas
-def data_exporting(df, features, filename):
+def data_exporting(df, filename):
     #dfp = df[features]
     dfp = df
     path ="E:\DevP\MLOps1\MLOps1\data\processed"
@@ -138,7 +138,7 @@ def main():
     df1 = read_file_csv('AdquisicionAhorro.csv')
     tdf1 = data_preparation(df1)
 
-    data_exporting(tdf1, '','AdquisicionAhorro.csv')
+    data_exporting(tdf1,'AdquisicionAhorro.csv')
     
 
 
