@@ -12,21 +12,10 @@ import seaborn as sns # Se basa en Matplotlib y la complementa en el tema de gra
 
 # Leemos los archivos csv
 def read_file_csv(filename):
-    #path ="E:\DevP\MLOps1\MLOps1\data\processed"
-    #df = pd.read_csv(os.path.join(path, filename)).set_index('coddoc')
-    df = pd.read_csv(os.path.join('..\data\source', filename)).set_index('coddoc')
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__),'..','data','processed', filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
-
-
-# Exportamos la matriz de datos con las columnas seleccionadas
-def data_exporting(df, filename):
-    dfp = df
-    path ="E:\DevP\MLOps1\MLOps1\data\processed"
-    dfp.to_csv(os.path.join(path, filename))
-    #dfp.to_csv(os.path.join('..\data\processed', filename))
-    print(filename, 'exportado correctamente en la carpeta processed')
 
 def data_trainning(df):
     #se elimina el campo de codigo
@@ -61,9 +50,8 @@ def data_trainning(df):
     print('Guardando Modelo')
     print('---')
     filenameModel = 'finalized_model.sav'
-    path = "E:\DevP\MLOps1\MLOps1\model"
     #pickle.dump(AdaBoost, open(os.path.join('../model/', filenameModel), 'wb'))
-    pickle.dump(AdaBoost, open(os.path.join(path, filenameModel), 'wb'))
+    pickle.dump(AdaBoost, open(os.path.join(os.path.dirname(__file__),'..','model', filenameModel), 'wb'))
 
     print('Validando Modelo')
     print('---')

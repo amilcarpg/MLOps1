@@ -123,10 +123,8 @@ def data_preparation(df):
     return df
 
 def read_file_csv(filename):
-    path ='E:\DevP\MLOps1\MLOps1\data'
-    df = pd.read_csv(os.path.join(path,"raw" ,filename)).set_index('coddoc')
-    #df = pd.read_csv(os.path.join('../data/raw/', filename)).set_index('coddoc')
-   
+
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__),'..','data','raw', filename)).set_index('coddoc')
     print(filename, ' cargado correctamente')
     return df
 
@@ -136,16 +134,15 @@ def read_file_csv(filename):
 def data_exporting(df, features, filename):
     #dfp = df[features]
     dfp = df
-    path ='E:\DevP\MLOps1\MLOps1\data\score'
-    dfp.to_csv(os.path.join(path, filename))
+   
+    dfp.to_csv(os.path.join(os.path.dirname(__file__),'..','data','score', filename))
     #dfp.to_csv(os.path.join('../data/score/', filename))
-    print(filename, 'exportado correctamente en la carpeta processed')
+    print(filename, 'exportado correctamente en la carpeta score')
 
 def data_ejecutar(df):
     print('Iiciando la evaluacion')
     filenameModel = 'finalized_model.sav'
-    path = "E:\DevP\MLOps1\MLOps1\model"
-    AdaBoost = pickle.load(open(os.path.join( path, filenameModel), 'rb'))
+    AdaBoost = pickle.load(open(os.path.join( os.path.dirname(__file__),'..','model', filenameModel), 'rb'))
     #AdaBoost = pickle.load(open(os.path.join('../model/', filenameModel), 'rb'))
     
     df_scoring = df.drop("Adq_Ahorro",axis=1)
